@@ -31,6 +31,14 @@ public class Point {
     @Column(name = "created_at")
     private Date createdAt;
 
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacher;
+
+    @ManyToOne
+    @JoinColumn(name = "subject_id")
+    private Subject subject;
+
     @Enumerated(EnumType.STRING)
     @NotNull(message = "status cannot be null")
     private Status status = Status.ACTIVE;
