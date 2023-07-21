@@ -21,3 +21,4 @@ public class EDailyApplication extends SpringBootServletInitializer {
 //dfvdfbvd
 //fbdffd
 //		bfdbf
+// qaqaa noldu day
