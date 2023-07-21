@@ -18,3 +18,4 @@ public class EDailyApplication extends SpringBootServletInitializer {
 	}
 }
 // Ala besdide)))
+// ala dayan daa
