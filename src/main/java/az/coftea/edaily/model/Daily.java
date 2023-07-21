@@ -13,6 +13,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "daily")
+@Entity
 public class Daily {
 
     @Id

@@ -1,15 +1,12 @@
 package az.coftea.edaily.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.util.Date;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class SchoolResponse {
     private int id;
     private String name;
@@ -19,6 +16,7 @@ public class SchoolResponse {
     private TeacherResponse director;
     private List<String> teacherNames;
     private List<String> studentNames;
+    private List<String> subjectNames;
 
     public SchoolResponse(int id, String name, String location, String description, Date createdAt, TeacherResponse director) {
         this.id = id;
@@ -27,5 +25,16 @@ public class SchoolResponse {
         this.description = description;
         this.createdAt = createdAt;
         this.director = director;
+    }
+
+    public SchoolResponse(int id, String name, String location, String description, Date createdAt, List<String> teacherNames, List<String> studentNames, List<String> subjectNames) {
+        this.id = id;
+        this.name = name;
+        this.location = location;
+        this.description = description;
+        this.createdAt = createdAt;
+        this.teacherNames = teacherNames;
+        this.studentNames = studentNames;
+        this.subjectNames = subjectNames;
     }
 }
