@@ -13,8 +13,7 @@ public class EDailyApplication extends SpringBootServletInitializer {
 	}
 
 	@Override
-	public SpringApplicationBuilder configure(SpringApplicationBuilder builder){
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		return builder.sources(EDailyApplication.class);
 	}
-
 }

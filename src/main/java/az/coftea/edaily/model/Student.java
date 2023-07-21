@@ -52,4 +52,10 @@ public class Student {
     @NotNull(message = "role cannot be null")
     private Role role = Role.STUDENT;
 
+    @NotNull(message = "email cannot be null")
+    private String email;
+
+    @NotNull(message = "password cannot be null")
+    private String password;
+
 }
