@@ -6,23 +6,24 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Point {
+@Table(name = "room")
+@Entity
+public class Room {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 
-    @NotNull(message = "point cannot be null")
-    @Max(value = 5)
-    @Min(value = 0)
-    private int point;
+    @NotNull(message = "number cannot be null")
+    @Size(max = 20,message = "number field cannot exceed 20 characters")
+    private String number;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -34,6 +35,7 @@ public class Point {
     private Status status = Status.ACTIVE;
 
     @ManyToOne
-    @JoinColumn(name = "daily_id")
-    private Daily daily;
+    @JoinColumn(name = "school_id")
+    private School school;
+
 }

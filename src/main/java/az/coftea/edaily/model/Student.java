@@ -16,31 +16,40 @@ import java.util.Date;
 @Table(name = "student")
 @Entity
 public class Student {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotNull(message = "name cannot be null")
-    @Size(max = 30,message = "name cannot exceed 30 characters")
+    @Size(max = 30,message = "name field cannot exceed 30 characters")
     private String name;
 
     @NotNull(message = "surname cannot be null")
-    @Size(max = 30,message = "surname cannot exceed 30 characters")
+    @Size(max = 30,message = "surname field cannot exceed 30 characters")
     private String surname;
 
     @Temporal(TemporalType.DATE)
     private Date birthday;
 
+    @ManyToOne
+    @JoinColumn(name = "school_id")
+    private School school;
+
     @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "created_at")
     private Date createdAt;
 
     @Enumerated(EnumType.STRING)
     @NotNull(message = "status cannot be null")
-    private Status status;
+    private Status status = Status.ACTIVE;
 
     @OneToOne(mappedBy = "student")
     private Daily daily;
+
+    @Enumerated(EnumType.STRING)
+    @NotNull(message = "role cannot be null")
+    private Role role = Role.STUDENT;
 
 }

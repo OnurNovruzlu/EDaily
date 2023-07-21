@@ -1,3 +1,6 @@
 Telebe elektron gundeliye username ve parol ile giris edib baxa bilecek.
 Gundelikdeki qiymetlere ister fennlere , isterse de tarix ardicilligina gore baxa bilecek.
 Qiymete baxanda orda hansi muellim , hansi fenn ,hansi qiymet , ne vaxt yazilib olmalidi.
+
+* tutalim ki il tamam oldu , ya da semestr , onda gundelikdeki melumatlarin hamisi sifirlanmali ,
+yoxsa o qeder datani bazada tutmaq problem olar.

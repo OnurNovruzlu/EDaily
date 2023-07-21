@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -24,10 +25,17 @@ public class Subject {
 
     @Enumerated(EnumType.STRING)
     @NotNull(message = "status cannot be null")
-    private Status status;
+    private Status status = Status.ACTIVE;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
     private Date createdAt;
+
+    @ManyToOne
+    @JoinColumn(name = "school_id")
+    private School school;
+
+    @OneToMany(mappedBy = "subject")
+    private List<Teacher> teachers;
 }
