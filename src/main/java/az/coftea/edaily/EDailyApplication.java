@@ -17,5 +17,7 @@ public class EDailyApplication extends SpringBootServletInitializer {
 		return builder.sources(EDailyApplication.class);
 	}
 }
-// Ala besdide)))
-// ala dayan daa
+//// Bu son negmedisdlkdnflvdf
+//dfvdfbvd
+//fbdffd
+//		bfdbf
