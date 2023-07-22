@@ -48,7 +48,8 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public String insert(NewTeacher newTeacher) {
         Optional<Teacher> teacher = teacherRepository.findByRole(newTeacher.getRole());
-        if(teacher.isPresent() && newTeacher.getRole().equals("DIRECTOR"))throw new InvalidParamException("Director already exists");
+        if(teacher.isPresent() && teacher.get().getStatus().name().equals("ACTIVE") && newTeacher.getRole().equals("DIRECTOR"))throw new InvalidParamException("Director already exists");
+
         teacherRepository.save(mapper.toTeacher(newTeacher));
         return "ok";
     }
@@ -66,7 +67,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public String update(int id, NewTeacher newTeacher) {
         Optional<Teacher> teacher1 = teacherRepository.findByRole(newTeacher.getRole());
-        if(teacher1.isPresent() && newTeacher.getRole().equals("DIRECTOR"))throw new InvalidParamException("Director already exists");
+        if(teacher1.isPresent() && teacher1.get().getStatus().name().equals("ACTIVE") && newTeacher.getRole().equals("DIRECTOR"))throw new InvalidParamException("Director already exists");
 
         Teacher teacher = teacherRepository.findById(id).orElseThrow(() -> new ModelNotFoundException("Teacher not found"));
         teacher.setName(newTeacher.getName());
