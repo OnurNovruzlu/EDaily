@@ -1,5 +1,6 @@
 package az.coftea.edaily.service;
 
+import az.coftea.edaily.dto.NewTeacher;
 import az.coftea.edaily.dto.TeacherResponse;
 
 import java.util.List;
