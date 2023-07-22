@@ -7,7 +7,9 @@ import az.coftea.edaily.dto.TeacherResponse;
 import az.coftea.edaily.model.Subject;
 import az.coftea.edaily.model.Teacher;
 import az.coftea.edaily.repository.SchoolRepository;
-import az.coftea.edaily.repository.TeacherRepository;
+import az.coftea.edaily.exception.ModelNotFoundException;
+import az.coftea.edaily.model.Role;
+import az.coftea.edaily.repository.SubjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -17,8 +19,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MapperManager implements MyMapper {
 
-    private final TeacherRepository teacherRepository;
     private final SchoolRepository schoolRepository;
+    private final SubjectRepository subjectRepository;
 
     @Override
     public Teacher toTeacher(NewTeacher newTeacher) {
@@ -26,10 +28,10 @@ public class MapperManager implements MyMapper {
         teacher.setName(newTeacher.getName());
         teacher.setSurname(newTeacher.getSurname());
         teacher.setBirthday(newTeacher.getBirthday());
-        teacher.setSchool(newTeacher.getSchool());
-        teacher.setRole(newTeacher.getRole());
-        teacher.setSubject(newTeacher.getSubject());
-        return teacherRepository.save(teacher);
+        teacher.setSchool(schoolRepository.findById(newTeacher.getSchoolId()).orElseThrow(() -> new ModelNotFoundException("School not found with id")));
+        teacher.setRole(Role.valueOf(newTeacher.getRole()));
+        teacher.setSubject(subjectRepository.findById(newTeacher.getSubjectId()).orElseThrow(() -> new ModelNotFoundException("Subject not found")));
+        return teacher;
     }
 
     @Override
@@ -39,10 +41,10 @@ public class MapperManager implements MyMapper {
         teacherResponse.setName(teacher.getName());
         teacherResponse.setSurname(teacher.getSurname());
         teacherResponse.setBirthday(teacher.getBirthday());
-        teacherResponse.setSchoolId(teacher.getSchool().getId());
+        teacherResponse.setSchoolName(teacher.getSchool().getName());
         teacherResponse.setCreatedAt(teacher.getCreatedAt());
-        teacherResponse.setStatusName(teacher.getStatus().name());
-        teacherResponse.setRoleName(teacher.getRole().name());
+        teacherResponse.setStatus(teacher.getStatus().name());
+        teacherResponse.setRole(teacher.getRole().name());
         teacherResponse.setSubjectName(teacher.getSubject().getName());
         return teacherResponse;
     }

@@ -1,8 +1,5 @@
 package az.coftea.edaily.dto;
 
-import az.coftea.edaily.model.Role;
-import az.coftea.edaily.model.School;
-import az.coftea.edaily.model.Subject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -17,11 +14,9 @@ public class NewTeacher {
 
     private Date birthday;
 
-    private School school;
+    private int schoolId;
 
-    private Date createdAt;
+    private final String role;
 
-    private Role role = Role.TEACHER;
-
-    private Subject subject;
+    private int subjectId;
 }
