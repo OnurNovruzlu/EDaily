@@ -10,6 +10,8 @@ import az.coftea.edaily.repository.SchoolRepository;
 import az.coftea.edaily.util.MyMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,13 +35,13 @@ public class SchoolServiceImpl implements SchoolService {
     public SchoolResponseS getById(int id) {
         return mapper.fromSchoolToSimple(schoolRepository.findById(id).orElseThrow(()->new ModelNotFoundException("School not found")));
     }
-
+    @Transactional
     @Override
     public String insert(NewSchool newSchool) {
         schoolRepository.save(mapper.toSchool(newSchool));
         return "ok";
     }
-
+    @Transactional
     @Override
     public String update(int id, NewSchool newSchool) {
         School school = schoolRepository.findById(id).orElseThrow(()->new ModelNotFoundException("School not found"));
@@ -49,7 +51,7 @@ public class SchoolServiceImpl implements SchoolService {
         schoolRepository.save(school);
         return "ok";
     }
-
+    @Transactional
     @Override
     public String delete(int id) {
         School school = schoolRepository.findById(id).orElseThrow(()->new ModelNotFoundException("School not found"));

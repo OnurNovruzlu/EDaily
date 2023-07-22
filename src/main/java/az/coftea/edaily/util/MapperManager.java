@@ -1,14 +1,10 @@
 package az.coftea.edaily.util;
 
 import az.coftea.edaily.dto.*;
-import az.coftea.edaily.model.School;
-import az.coftea.edaily.model.Subject;
-import az.coftea.edaily.model.Teacher;
+import az.coftea.edaily.model.*;
 import az.coftea.edaily.repository.SchoolRepository;
 import az.coftea.edaily.exception.ModelNotFoundException;
-import az.coftea.edaily.model.Role;
 import az.coftea.edaily.repository.SubjectRepository;
-import az.coftea.edaily.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +16,6 @@ public class MapperManager implements MyMapper {
 
     private final SchoolRepository schoolRepository;
     private final SubjectRepository subjectRepository;
-    private final TeacherRepository teacherRepository;
 
     @Override
     public Teacher toTeacher(NewTeacher newTeacher) {
@@ -53,7 +48,7 @@ public class MapperManager implements MyMapper {
     public Subject toSubject(NewSubject newSubject) {
         Subject subject = new Subject();
         subject.setName(newSubject.getName());
-        subject.setSchool(schoolRepository.findById(newSubject.getSchoolId()).orElseThrow(()->new ModelNotFoundException("School not found")));
+        subject.setSchool(schoolRepository.findById(newSubject.getSchoolId()).orElseThrow(() -> new ModelNotFoundException("School not found")));
         return subject;
     }
 
@@ -65,7 +60,7 @@ public class MapperManager implements MyMapper {
         response.setStatus(subject.getStatus().name());
         response.setCreatedAt(subject.getCreatedAt());
         response.setSchoolName(subject.getSchool().getName());
-        response.setTeacherNames(subject.getTeachers().stream().map(t->t.getName()).collect(Collectors.toList()));
+        response.setTeacherNames(subject.getTeachers().stream().map(Teacher::getName).collect(Collectors.toList()));
         return response;
     }
 
@@ -86,9 +81,9 @@ public class MapperManager implements MyMapper {
         response.setLocation(school.getLocation());
         response.setDescription(school.getDescription());
         response.setCreatedAt(school.getCreatedAt());
-        response.setTeacherNames(school.getTeachers().stream().map(t->t.getName()).collect(Collectors.toList()));
-        response.setStudentNames(school.getStudents().stream().map(s->s.getName()).collect(Collectors.toList()));
-        response.setSubjectNames(school.getSubjects().stream().map(sub->sub.getName()).collect(Collectors.toList()));
+        response.setTeacherNames(school.getTeachers().stream().map(Teacher::getName).collect(Collectors.toList()));
+        response.setStudentNames(school.getStudents().stream().map(Student::getName).collect(Collectors.toList()));
+        response.setSubjectNames(school.getSubjects().stream().map(Subject::getName).collect(Collectors.toList()));
         response.setDirector(fromTeacher(school.getTeachers().stream().filter(t-> t.getRole().equals(Role.DIRECTOR)).findFirst().orElseThrow(()->new ModelNotFoundException("Director not found"))));
         return response;
     }
@@ -102,5 +97,24 @@ public class MapperManager implements MyMapper {
         response.setDescription(school.getDescription());
         response.setCreatedAt(school.getCreatedAt());
         return response;
+    }
+
+    @Override
+    public Room toRoom(NewRoom newRoom) {
+        Room room = new Room();
+        room.setNumber(newRoom.getNumber());
+        room.setSchool(schoolRepository.findById(newRoom.getSchoolId()).orElseThrow(() -> new ModelNotFoundException("School not found")));
+        return room;
+    }
+
+    @Override
+    public RoomResponse fromRoom(Room room) {
+        RoomResponse roomResponse = new RoomResponse();
+        roomResponse.setId(roomResponse.getId());
+        roomResponse.setNumber(roomResponse.getNumber());
+        roomResponse.setCreatedAt(room.getCreatedAt());
+        roomResponse.setStatusName(room.getStatus().name());
+        roomResponse.setSchoolName(room.getSchool().getName());
+        return roomResponse;
     }
 }

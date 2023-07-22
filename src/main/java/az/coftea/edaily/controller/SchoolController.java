@@ -5,6 +5,7 @@ import az.coftea.edaily.dto.SchoolResponse;
 import az.coftea.edaily.dto.SchoolResponseS;
 import az.coftea.edaily.service.SchoolService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,6 +32,7 @@ public class SchoolController {
     public String delete(@PathVariable("id")int id){
         return service.delete(id);
     }
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/insert")
     public String insert(@RequestBody NewSchool newSchool){
         return service.insert(newSchool);

@@ -2,6 +2,7 @@ package az.coftea.edaily.service;
 
 import az.coftea.edaily.dto.NewSubject;
 import az.coftea.edaily.dto.SubjectResponse;
+import az.coftea.edaily.exception.ModelNotFoundException;
 import az.coftea.edaily.model.Status;
 import az.coftea.edaily.model.Subject;
 import az.coftea.edaily.repository.SchoolRepository;
@@ -23,7 +24,7 @@ public class SubjectServiceImpl implements SubjectService{
 
     @Override
     public List<SubjectResponse> getAll() {
-        return subjectRepository.findAll().stream().map(s->mapper.fromSubject(s)).collect(Collectors.toList());
+        return subjectRepository.findAll().stream().map(mapper::fromSubject).collect(Collectors.toList());
     }
 
     @Override

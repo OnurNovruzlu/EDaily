@@ -4,7 +4,9 @@ import az.coftea.edaily.dto.NewTeacher;
 import az.coftea.edaily.dto.TeacherResponse;
 import az.coftea.edaily.exception.InvalidParamException;
 import az.coftea.edaily.exception.ModelNotFoundException;
-import az.coftea.edaily.model.*;
+import az.coftea.edaily.model.Role;
+import az.coftea.edaily.model.Status;
+import az.coftea.edaily.model.Teacher;
 import az.coftea.edaily.repository.SchoolRepository;
 import az.coftea.edaily.repository.SubjectRepository;
 import az.coftea.edaily.repository.TeacherRepository;
@@ -33,7 +35,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public List<TeacherResponse> getAll() {
-        return teacherRepository.findAll().stream().map(t->mapper.fromTeacher(t)).collect(Collectors.toList());
+        return teacherRepository.findAll().stream().map(mapper::fromTeacher).collect(Collectors.toList());
     }
 
 
