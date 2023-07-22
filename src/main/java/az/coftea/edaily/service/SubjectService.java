@@ -1,5 +1,8 @@
 package az.coftea.edaily.service;
 
+import az.coftea.edaily.dto.NewSubject;
+import az.coftea.edaily.dto.SubjectResponse;
+
 import java.util.List;
 
 public interface SubjectService {
