@@ -1,15 +1,14 @@
 package az.coftea.edaily.util;
 
-import az.coftea.edaily.dto.NewSubject;
-import az.coftea.edaily.dto.NewTeacher;
-import az.coftea.edaily.dto.SubjectResponse;
-import az.coftea.edaily.dto.TeacherResponse;
+import az.coftea.edaily.dto.*;
+import az.coftea.edaily.model.School;
 import az.coftea.edaily.model.Subject;
 import az.coftea.edaily.model.Teacher;
 import az.coftea.edaily.repository.SchoolRepository;
 import az.coftea.edaily.exception.ModelNotFoundException;
 import az.coftea.edaily.model.Role;
 import az.coftea.edaily.repository.SubjectRepository;
+import az.coftea.edaily.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +20,7 @@ public class MapperManager implements MyMapper {
 
     private final SchoolRepository schoolRepository;
     private final SubjectRepository subjectRepository;
+    private final TeacherRepository teacherRepository;
 
     @Override
     public Teacher toTeacher(NewTeacher newTeacher) {
@@ -66,6 +66,41 @@ public class MapperManager implements MyMapper {
         response.setCreatedAt(subject.getCreatedAt());
         response.setSchoolName(subject.getSchool().getName());
         response.setTeacherNames(subject.getTeachers().stream().map(t->t.getName()).collect(Collectors.toList()));
+        return response;
+    }
+
+    @Override
+    public School toSchool(NewSchool newSchool) {
+        School school = new School();
+        school.setName(newSchool.getName());
+        school.setDescription(newSchool.getDescription());
+        school.setLocation(newSchool.getLocation());
+        return school;
+    }
+
+    @Override
+    public SchoolResponse fromSchoolToAll(School school) {
+        SchoolResponse response = new SchoolResponse();
+        response.setId(school.getId());
+        response.setName(school.getName());
+        response.setLocation(school.getLocation());
+        response.setDescription(school.getDescription());
+        response.setCreatedAt(school.getCreatedAt());
+        response.setTeacherNames(school.getTeachers().stream().map(t->t.getName()).collect(Collectors.toList()));
+        response.setStudentNames(school.getStudents().stream().map(s->s.getName()).collect(Collectors.toList()));
+        response.setSubjectNames(school.getSubjects().stream().map(sub->sub.getName()).collect(Collectors.toList()));
+        response.setDirector(fromTeacher(school.getTeachers().stream().filter(t-> t.getRole().equals(Role.DIRECTOR)).findFirst().orElseThrow(()->new ModelNotFoundException("Director not found"))));
+        return response;
+    }
+
+    @Override
+    public SchoolResponseS fromSchoolToSimple(School school) {
+        SchoolResponseS response = new SchoolResponseS();
+        response.setId(school.getId());
+        response.setName(school.getName());
+        response.setLocation(school.getLocation());
+        response.setDescription(school.getDescription());
+        response.setCreatedAt(school.getCreatedAt());
         return response;
     }
 }

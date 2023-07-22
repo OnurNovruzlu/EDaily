@@ -13,8 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.security.InvalidParameterException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,13 +39,13 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public TeacherResponse getDirector() {
-        return mapper.fromTeacher(teacherRepository.findByRole(Role.DIRECTOR.name()).orElseThrow(() -> new ModelNotFoundException("Director not found")));
+        return mapper.fromTeacher(teacherRepository.findByRole(Role.valueOf(Role.DIRECTOR.name())).orElseThrow(() -> new ModelNotFoundException("Director not found")));
     }
 
     @Transactional
     @Override
     public String insert(NewTeacher newTeacher) {
-        Optional<Teacher> optional = teacherRepository.findByRole(newTeacher.getRole());
+        Optional<Teacher> optional = teacherRepository.findByRole(Role.valueOf(newTeacher.getRole()));
         if(optional.isPresent() && optional.get().getStatus().name().equals("ACTIVE") && newTeacher.getRole().equals("DIRECTOR"))throw new InvalidParamException("Director already exists");
 
         teacherRepository.save(mapper.toTeacher(newTeacher));
@@ -66,7 +64,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Transactional
     @Override
     public String update(int id, NewTeacher newTeacher) {
-        Optional<Teacher> optional = teacherRepository.findByRole(newTeacher.getRole());
+        Optional<Teacher> optional = teacherRepository.findByRole(Role.valueOf(newTeacher.getRole()));
         if(optional.isPresent() && optional.get().getStatus().name().equals("ACTIVE") && newTeacher.getRole().equals("DIRECTOR"))throw new InvalidParamException("Director already exists");
 
         Teacher teacher = teacherRepository.findById(id).orElseThrow(() -> new ModelNotFoundException("Teacher not found"));
