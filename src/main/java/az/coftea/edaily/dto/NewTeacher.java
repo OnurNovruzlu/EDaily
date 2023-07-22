@@ -17,11 +17,9 @@ public class NewTeacher {
 
     private Date birthday;
 
-    private School school;
+    private int schoolId;
 
-    private Date createdAt;
+    private final String role;
 
-    private Role role = Role.TEACHER;
-
-    private Subject subject;
+    private String subject;
 }

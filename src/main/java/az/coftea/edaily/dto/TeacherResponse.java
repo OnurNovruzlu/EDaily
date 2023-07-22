@@ -25,15 +25,15 @@ public class TeacherResponse {
 
     private Date birthday;
 
-    private int schoolId;
+    private String school;
 
     private Date createdAt;
 
-    private String statusName;
+    private String status;
 
-    private String roleName;
+    private String role;
 
-    private String subjectName;
+    private String subject;
 
 
 }
