@@ -1,5 +1,8 @@
 package az.coftea.edaily.service;
 
+import az.coftea.edaily.dto.NewRoom;
+import az.coftea.edaily.dto.RoomResponse;
+
 import java.util.List;
 
 public interface RoomService {

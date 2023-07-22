@@ -1,9 +1,7 @@
 package az.coftea.edaily.util;
 
-import az.coftea.edaily.dto.NewSubject;
-import az.coftea.edaily.dto.NewTeacher;
-import az.coftea.edaily.dto.SubjectResponse;
-import az.coftea.edaily.dto.TeacherResponse;
+import az.coftea.edaily.dto.*;
+import az.coftea.edaily.model.Room;
 import az.coftea.edaily.model.Subject;
 import az.coftea.edaily.model.Teacher;
 import az.coftea.edaily.repository.SchoolRepository;
@@ -53,7 +51,7 @@ public class MapperManager implements MyMapper {
     public Subject toSubject(NewSubject newSubject) {
         Subject subject = new Subject();
         subject.setName(newSubject.getName());
-        subject.setSchool(schoolRepository.findById(newSubject.getSchoolId()).orElseThrow(()->new ModelNotFoundException("School not found")));
+        subject.setSchool(schoolRepository.findById(newSubject.getSchoolId()).orElseThrow(() -> new ModelNotFoundException("School not found")));
         return subject;
     }
 
@@ -65,7 +63,26 @@ public class MapperManager implements MyMapper {
         response.setStatus(subject.getStatus().name());
         response.setCreatedAt(subject.getCreatedAt());
         response.setSchoolName(subject.getSchool().getName());
-        response.setTeacherNames(subject.getTeachers().stream().map(t->t.getName()).collect(Collectors.toList()));
+        response.setTeacherNames(subject.getTeachers().stream().map(t -> t.getName()).collect(Collectors.toList()));
         return response;
+    }
+
+    @Override
+    public Room toRoom(NewRoom newRoom) {
+        Room room = new Room();
+        room.setNumber(newRoom.getNumber());
+        room.setSchool(schoolRepository.findById(newRoom.getSchoolId()).orElseThrow(() -> new ModelNotFoundException("School not found")));
+        return room;
+    }
+
+    @Override
+    public RoomResponse fromRoom(Room room) {
+        RoomResponse roomResponse = new RoomResponse();
+        roomResponse.setId(roomResponse.getId());
+        roomResponse.setNumber(roomResponse.getNumber());
+        roomResponse.setCreatedAt(room.getCreatedAt());
+        roomResponse.setStatusName(room.getStatus().name());
+        roomResponse.setSchoolName(room.getSchool().getName());
+        return roomResponse;
     }
 }
