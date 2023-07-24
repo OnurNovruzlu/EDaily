@@ -1,5 +1,8 @@
 package az.coftea.edaily.service;
 
+import az.coftea.edaily.dto.NewStudent;
+import az.coftea.edaily.dto.StudentResponse;
+
 import java.util.List;
 
 public interface StudentService {

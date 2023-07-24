@@ -12,4 +12,5 @@ public class SchoolResponseS {
     private String location;
     private String description;
     private Date createdAt;
+    private String status;
 }

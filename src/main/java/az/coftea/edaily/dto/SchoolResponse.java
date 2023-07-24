@@ -14,6 +14,7 @@ public class SchoolResponse {
     private String name;
     private String location;
     private String description;
+    private String status;
     private Date createdAt;
     private TeacherResponse director;
     private List<String> teacherNames;

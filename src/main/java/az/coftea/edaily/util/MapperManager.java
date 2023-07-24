@@ -79,6 +79,7 @@ public class MapperManager implements MyMapper {
         response.setId(school.getId());
         response.setName(school.getName());
         response.setLocation(school.getLocation());
+        response.setStatus(school.getStatus().name());
         response.setDescription(school.getDescription());
         response.setCreatedAt(school.getCreatedAt());
         response.setTeacherNames(school.getTeachers().stream().map(Teacher::getName).collect(Collectors.toList()));
@@ -93,6 +94,7 @@ public class MapperManager implements MyMapper {
         SchoolResponseS response = new SchoolResponseS();
         response.setId(school.getId());
         response.setName(school.getName());
+        response.setStatus(school.getStatus().name());
         response.setLocation(school.getLocation());
         response.setDescription(school.getDescription());
         response.setCreatedAt(school.getCreatedAt());

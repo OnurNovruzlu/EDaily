@@ -1,16 +1,7 @@
 package az.coftea.edaily.dto;
 
-import az.coftea.edaily.model.Role;
-import az.coftea.edaily.model.School;
-import az.coftea.edaily.model.Status;
-import az.coftea.edaily.model.Subject;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Data
@@ -34,6 +25,4 @@ public class TeacherResponse {
     private String role;
 
     private String subjectName;
-
-
 }
