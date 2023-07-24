@@ -2,12 +2,14 @@ package az.coftea.edaily.util;
 
 import az.coftea.edaily.dto.*;
 import az.coftea.edaily.model.*;
+import az.coftea.edaily.repository.DailyRepository;
 import az.coftea.edaily.repository.SchoolRepository;
 import az.coftea.edaily.exception.ModelNotFoundException;
 import az.coftea.edaily.repository.SubjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.stream.Collectors;
 
 @Component
@@ -16,6 +18,7 @@ public class MapperManager implements MyMapper {
 
     private final SchoolRepository schoolRepository;
     private final SubjectRepository subjectRepository;
+    private final DailyRepository dailyRepository;
 
     @Override
     public Teacher toTeacher(NewTeacher newTeacher) {
@@ -31,17 +34,17 @@ public class MapperManager implements MyMapper {
 
     @Override
     public TeacherResponse fromTeacher(Teacher teacher) {
-        TeacherResponse teacherResponse = new TeacherResponse();
-        teacherResponse.setId(teacherResponse.getId());
-        teacherResponse.setName(teacher.getName());
-        teacherResponse.setSurname(teacher.getSurname());
-        teacherResponse.setBirthday(teacher.getBirthday());
-        teacherResponse.setSchoolName(teacher.getSchool().getName());
-        teacherResponse.setCreatedAt(teacher.getCreatedAt());
-        teacherResponse.setStatus(teacher.getStatus().name());
-        teacherResponse.setRole(teacher.getRole().name());
-        teacherResponse.setSubjectName(teacher.getSubject().getName());
-        return teacherResponse;
+        TeacherResponse response = new TeacherResponse();
+        response.setId(response.getId());
+        response.setName(teacher.getName());
+        response.setSurname(teacher.getSurname());
+        response.setBirthday(teacher.getBirthday());
+        response.setSchoolName(teacher.getSchool().getName());
+        response.setCreatedAt(teacher.getCreatedAt());
+        response.setStatus(teacher.getStatus().name());
+        response.setRole(teacher.getRole().name());
+        response.setSubjectName(teacher.getSubject().getName());
+        return response;
     }
 
     @Override
@@ -85,7 +88,7 @@ public class MapperManager implements MyMapper {
         response.setTeacherNames(school.getTeachers().stream().map(Teacher::getName).collect(Collectors.toList()));
         response.setStudentNames(school.getStudents().stream().map(Student::getName).collect(Collectors.toList()));
         response.setSubjectNames(school.getSubjects().stream().map(Subject::getName).collect(Collectors.toList()));
-        response.setDirector(fromTeacher(school.getTeachers().stream().filter(t-> t.getRole().equals(Role.DIRECTOR)).findFirst().orElseThrow(()->new ModelNotFoundException("Director not found"))));
+        response.setDirector(fromTeacher(school.getTeachers().stream().filter(t -> t.getRole().equals(Role.DIRECTOR)).findFirst().orElseThrow(() -> new ModelNotFoundException("Director not found"))));
         return response;
     }
 
@@ -111,12 +114,43 @@ public class MapperManager implements MyMapper {
 
     @Override
     public RoomResponse fromRoom(Room room) {
-        RoomResponse roomResponse = new RoomResponse();
-        roomResponse.setId(roomResponse.getId());
-        roomResponse.setNumber(roomResponse.getNumber());
-        roomResponse.setCreatedAt(room.getCreatedAt());
-        roomResponse.setStatusName(room.getStatus().name());
-        roomResponse.setSchoolName(room.getSchool().getName());
-        return roomResponse;
+        RoomResponse response = new RoomResponse();
+        response.setId(room.getId());
+        response.setNumber(room.getNumber());
+        response.setCreatedAt(room.getCreatedAt());
+        response.setStatusName(room.getStatus().name());
+        response.setSchoolName(room.getSchool().getName());
+        return response;
+    }
+
+    @Override
+    public Student toStudent(NewStudent newStudent) {
+        Student student = new Student();
+        student.setName(newStudent.getName());
+        student.setSurname(newStudent.getSurname());
+        student.setBirthday(newStudent.getBirthday());
+        student.setSchool(schoolRepository.findById(newStudent.getSchoolId()).orElseThrow(() -> new ModelNotFoundException("School not found")));
+        student.setDaily(dailyRepository.findById(newStudent.getDailyId()).orElseThrow(() -> new ModelNotFoundException("Daily not found")));
+        student.setRole(Role.valueOf(newStudent.getRole()));
+        student.setEmail(newStudent.getEmail());
+        student.setPassword(newStudent.getPassword());
+        return student;
+    }
+
+    @Override
+    public StudentResponse fromStudent(Student student) {
+        StudentResponse response = new StudentResponse();
+        response.setId(student.getId());
+        response.setName(student.getName());
+        response.setSurname(student.getSurname());
+        response.setBirthday(student.getBirthday());
+        response.setSchoolName(student.getSchool().getName());
+        response.setCreatedAt(student.getCreatedAt());
+        response.setStatus(student.getStatus().name());
+        response.setDailyId(student.getDaily().getId());
+        response.setRole(student.getRole().name());
+        response.setEmail(student.getEmail());
+        response.setPassword(student.getPassword());
+        return response;
     }
 }

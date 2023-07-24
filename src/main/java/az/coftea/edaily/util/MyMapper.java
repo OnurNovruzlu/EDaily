@@ -1,10 +1,7 @@
 package az.coftea.edaily.util;
 
 import az.coftea.edaily.dto.*;
-import az.coftea.edaily.model.School;
-import az.coftea.edaily.model.Room;
-import az.coftea.edaily.model.Subject;
-import az.coftea.edaily.model.Teacher;
+import az.coftea.edaily.model.*;
 
 public interface MyMapper {
     Teacher toTeacher(NewTeacher newTeacher);
@@ -16,4 +13,7 @@ public interface MyMapper {
     SchoolResponseS fromSchoolToSimple(School school);
     Room toRoom(NewRoom newRoom);
     RoomResponse fromRoom(Room room);
+    Student toStudent(NewStudent newStudent);
+    StudentResponse fromStudent(Student student);
+
 }

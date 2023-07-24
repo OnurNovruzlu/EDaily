@@ -11,6 +11,7 @@ import az.coftea.edaily.repository.SchoolRepository;
 import az.coftea.edaily.repository.SubjectRepository;
 import az.coftea.edaily.repository.TeacherRepository;
 import az.coftea.edaily.util.MapperManager;
+import az.coftea.edaily.util.MyMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class TeacherServiceImpl implements TeacherService {
 
-    private final MapperManager mapper;
+    private final MyMapper mapper;
     private final TeacherRepository teacherRepository;
     private final SchoolRepository schoolRepository;
     private final SubjectRepository subjectRepository;
