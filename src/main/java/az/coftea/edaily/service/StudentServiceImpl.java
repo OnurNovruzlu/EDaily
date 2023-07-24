@@ -25,7 +25,6 @@ public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
     private final SchoolRepository schoolRepository;
-    private final DailyRepository dailyRepository;
     private final MyMapper mapper;
 
     @Override
@@ -83,7 +82,6 @@ public class StudentServiceImpl implements StudentService {
         student.setSurname(newStudent.getSurname());
         student.setBirthday(newStudent.getBirthday());
         student.setSchool(schoolRepository.findById(newStudent.getSchoolId()).orElseThrow(() -> new ModelNotFoundException("School not found")));
-        student.setDaily(dailyRepository.findById(newStudent.getDailyId()).orElseThrow(() -> new ModelNotFoundException("Daily not found")));
         student.setRole(Role.valueOf(newStudent.getRole()));
         student.setEmail(newStudent.getEmail());
         student.setPassword(newStudent.getPassword());

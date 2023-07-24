@@ -17,8 +17,6 @@ public class NewStudent {
 
     private int schoolId;
 
-    private int dailyId;
-
     private String role;
 
     private String email;

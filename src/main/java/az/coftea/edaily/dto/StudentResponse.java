@@ -16,7 +16,7 @@ public class StudentResponse {
     private String schoolName;
     private Date createdAt;
     private String status;
-    private int dailyId;
+    private Integer dailyId;
     private String role;
     private String email;
     private String password;

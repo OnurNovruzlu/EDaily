@@ -33,7 +33,7 @@ public class MapperManager implements MyMapper {
     @Override
     public TeacherResponse fromTeacher(Teacher teacher) {
         TeacherResponse response = new TeacherResponse();
-        response.setId(response.getId());
+        response.setId(teacher.getId());
         response.setName(teacher.getName());
         response.setSurname(teacher.getSurname());
         response.setBirthday(teacher.getBirthday());
@@ -128,7 +128,6 @@ public class MapperManager implements MyMapper {
         student.setSurname(newStudent.getSurname());
         student.setBirthday(newStudent.getBirthday());
         student.setSchool(schoolRepository.findById(newStudent.getSchoolId()).orElseThrow(() -> new ModelNotFoundException("School not found")));
-        student.setDaily(dailyRepository.findById(newStudent.getDailyId()).orElseThrow(() -> new ModelNotFoundException("Daily not found")));
         student.setRole(Role.valueOf(newStudent.getRole()));
         student.setEmail(newStudent.getEmail());
         student.setPassword(newStudent.getPassword());
@@ -144,8 +143,9 @@ public class MapperManager implements MyMapper {
         response.setBirthday(student.getBirthday());
         response.setSchoolName(student.getSchool().getName());
         response.setCreatedAt(student.getCreatedAt());
-        response.setStatus(student.getStatus().name());
         response.setDailyId(student.getDaily().getId());
+        if(student.getDaily() == null)response.setDailyId(null);
+        response.setStatus(student.getStatus().name());
         response.setRole(student.getRole().name());
         response.setEmail(student.getEmail());
         response.setPassword(student.getPassword());
