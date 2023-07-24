@@ -7,3 +7,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+springdoc:
+  api-docs:
+    enabled: true
+    path: /openapi/v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /openapi/swagger-ui.html
+
