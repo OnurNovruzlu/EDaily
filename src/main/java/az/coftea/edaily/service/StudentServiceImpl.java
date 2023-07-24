@@ -59,6 +59,12 @@ public class StudentServiceImpl implements StudentService {
     @Transactional
     @Override
     public String insert(NewStudent newStudent) {
+        if(ParamValidator.validateEmail(newStudent.getEmail())){
+            throw new InvalidParamException("please enter valid email");
+        }
+        if(ParamValidator.validatePassword(newStudent.getPassword())){
+            throw new InvalidParamException("Password must be 6 characters at least");
+        }
         studentRepository.save(mapper.toStudent(newStudent));
         return "ok";
     }
