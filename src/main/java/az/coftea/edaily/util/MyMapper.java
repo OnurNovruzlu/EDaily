@@ -17,4 +17,6 @@ public interface MyMapper {
     Daily toDaily(NewDaily newDaily);
     PointResponse fromPoint(Point point);
     Point toPoint(NewPoint newPoint);
+    Student toStudent(NewStudent newStudent);
+    StudentResponse fromStudent(Student student);
 }

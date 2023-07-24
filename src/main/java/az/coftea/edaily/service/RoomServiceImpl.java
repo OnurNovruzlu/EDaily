@@ -7,7 +7,7 @@ import az.coftea.edaily.model.Room;
 import az.coftea.edaily.model.Status;
 import az.coftea.edaily.repository.RoomRepository;
 import az.coftea.edaily.repository.SchoolRepository;
-import az.coftea.edaily.util.MapperManager;
+import az.coftea.edaily.util.MyMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ public class RoomServiceImpl implements RoomService {
 
     private final SchoolRepository schoolRepository;
     private final RoomRepository roomRepository;
-    private final MapperManager mapper;
+    private final MyMapper mapper;
 
     @Override
     public List<RoomResponse> getAll() {
