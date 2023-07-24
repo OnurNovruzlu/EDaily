@@ -16,7 +16,7 @@ public class NewTeacher {
 
     private int schoolId;
 
-    private final String role;
+    private String role;
 
     private int subjectId;
 }

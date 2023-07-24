@@ -1,5 +1,8 @@
 package az.coftea.edaily.service;
 
+import az.coftea.edaily.dto.DailyResponse;
+import az.coftea.edaily.dto.NewDaily;
+
 import java.util.List;
 
 public interface DailyService {

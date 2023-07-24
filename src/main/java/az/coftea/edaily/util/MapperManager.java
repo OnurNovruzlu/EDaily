@@ -4,6 +4,7 @@ import az.coftea.edaily.dto.*;
 import az.coftea.edaily.model.*;
 import az.coftea.edaily.repository.SchoolRepository;
 import az.coftea.edaily.exception.ModelNotFoundException;
+import az.coftea.edaily.repository.StudentRepository;
 import az.coftea.edaily.repository.SubjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ public class MapperManager implements MyMapper {
 
     private final SchoolRepository schoolRepository;
     private final SubjectRepository subjectRepository;
+    private final StudentRepository studentRepository;
 
     @Override
     public Teacher toTeacher(NewTeacher newTeacher) {
@@ -118,5 +120,23 @@ public class MapperManager implements MyMapper {
         roomResponse.setStatusName(room.getStatus().name());
         roomResponse.setSchoolName(room.getSchool().getName());
         return roomResponse;
+    }
+
+    @Override
+    public DailyResponse fromDaily(Daily daily) {
+        DailyResponse response = new DailyResponse();
+        response.setId(daily.getId());
+        response.setStatus(daily.getStatus().name());
+        response.setCreatedAt(daily.getCreatedAt());
+        response.setStudent(fromStudent(daily.getStudent()));
+        response.setPoints(daily.getPoints().stream().map(Point::getPoint).collect(Collectors.toList()));
+        return response;
+    }
+
+    @Override
+    public Daily toDaily(NewDaily newDaily) {
+        Daily daily = new Daily();
+        daily.setStudent(studentRepository.findById(newDaily.getStudentId()).orElseThrow(()->new ModelNotFoundException("Student not found")));
+        return daily;
     }
 }
