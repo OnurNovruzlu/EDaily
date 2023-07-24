@@ -15,4 +15,6 @@ public interface MyMapper {
     RoomResponse fromRoom(Room room);
     DailyResponse fromDaily(Daily daily);
     Daily toDaily(NewDaily newDaily);
+    PointResponse fromPoint(Point point);
+    Point toPoint(NewPoint newPoint);
 }

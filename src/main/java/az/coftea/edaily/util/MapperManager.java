@@ -2,10 +2,8 @@ package az.coftea.edaily.util;
 
 import az.coftea.edaily.dto.*;
 import az.coftea.edaily.model.*;
-import az.coftea.edaily.repository.SchoolRepository;
+import az.coftea.edaily.repository.*;
 import az.coftea.edaily.exception.ModelNotFoundException;
-import az.coftea.edaily.repository.StudentRepository;
-import az.coftea.edaily.repository.SubjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +16,8 @@ public class MapperManager implements MyMapper {
     private final SchoolRepository schoolRepository;
     private final SubjectRepository subjectRepository;
     private final StudentRepository studentRepository;
+    private final DailyRepository dailyRepository;
+    private final TeacherRepository teacherRepository;
 
     @Override
     public Teacher toTeacher(NewTeacher newTeacher) {
@@ -138,5 +138,27 @@ public class MapperManager implements MyMapper {
         Daily daily = new Daily();
         daily.setStudent(studentRepository.findById(newDaily.getStudentId()).orElseThrow(()->new ModelNotFoundException("Student not found")));
         return daily;
+    }
+
+    @Override
+    public PointResponse fromPoint(Point point) {
+        PointResponse response = new PointResponse();
+        response.setPoint(point.getPoint());
+        response.setCreatedAt(point.getCreatedAt());
+        response.setStatus(point.getStatus().name());
+        response.setSubjectName(point.getSubject().getName());
+        response.setTeacherName(point.getTeacher().getName());
+        response.setDailyId(point.getDaily().getId());
+        return response;
+    }
+
+    @Override
+    public Point toPoint(NewPoint newPoint) {
+        Point point = new Point();
+        point.setPoint(newPoint.getPoint());
+        point.setSubject(subjectRepository.findById(newPoint.getSubjectId()).orElseThrow(()->new ModelNotFoundException("Subject not found")));
+        point.setDaily(dailyRepository.findById(newPoint.getDailyId()).orElseThrow(()->new ModelNotFoundException("Daily not found")));
+        point.setTeacher(teacherRepository.findById(newPoint.getTeacherId()).orElseThrow(()-> new ModelNotFoundException("Teacher not found")));
+        return point;
     }
 }
